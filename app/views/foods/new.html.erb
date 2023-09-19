@@ -1,0 +1,22 @@
+<!-- app/views/foods/new.html.erb -->
+<h2>Add Food to <%= @recipe.name %></h2>
+
+<%= form_for [@recipe, @food] do |f| %>
+  <!-- Form fields for food go here -->
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :measurement_unit %>
+    <%= f.text_field :measurement_unit %>
+  </div>
+  <div class="field">
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Create Food' %>
+  </div>
+<% end %>
+
