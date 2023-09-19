@@ -1,0 +1,27 @@
+.recipe-wrapper {
+	width: 50%;
+	margin: 0 auto;
+	border: 1px solid black;
+	padding: 1rem;
+
+.details-wrapper {
+	display: flex;
+	justify-content: space-between;
+	
+}
+
+.toggle {
+	margin-top: 1rem;
+	
+}
+
+.actions {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: center;
+	align-items: center;
+}
+
+.actions button {
+width: 40%
+}

@@ -1,2 +1,15 @@
-<h1>Recipes#show</h1>
-<p>Find me in app/views/recipes/show.html.erb</p>
+<h1 class="recipe-page-title"><%=@recipe.name%></h1>
+<div class="recipe-wrapper">
+<div class="details-wrapper">
+  <div class="details">
+    <p>Preparation time: <%=@recipe.preparation_time%></p>
+    <p>Cooking time: <%=@recipe.cooking_time%></p>
+    <p>Steps go here</p>
+  </div>
+  <div class="toggle">button</p></div>
+</div>
+<div class="actions">
+  <button>Generate Shopping LIst</button>
+  <button>Add ingredient</button>
+</div>
+</div>
