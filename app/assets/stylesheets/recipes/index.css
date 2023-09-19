@@ -11,3 +11,14 @@
 .recipe-page-title {
 	text-align: center;
 }
+
+.title-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding-top: 0.5rem;
+
+}
+.recipe-name-link {
+	font-size: 1.2rem;
+}
