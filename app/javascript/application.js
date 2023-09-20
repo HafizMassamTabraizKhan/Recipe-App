@@ -2,38 +2,25 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-
 document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('recipe-form');
-  const checkbox = document.getElementById('public-checkbox');
-
-  if (form && checkbox) {
-    checkbox.addEventListener('change', function() {
+  // Event delegation for checkbox change event
+  document.addEventListener('change', function(event) {
+    if (event.target.matches('#public-checkbox')) {
+      const form = document.getElementById('recipe-form');
       form.submit();
-    });
-  }
+    }
+  });
+
+  // Event delegation for modal
+  const modal = document.getElementById("myModal");
+  const openModalButton = document.getElementById("myBtn");
+
+  document.addEventListener('click', function(event) {
+    if (event.target === openModalButton) {
+      modal.style.display = "block";
+    } else if (event.target.classList.contains("close") || event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 });
- 
-
-
-
-var modal = document.getElementById("myModal");
-
-var btn = document.getElementById("myBtn");
-
-var span = document.getElementsByClassName("close")[0];
-
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 
