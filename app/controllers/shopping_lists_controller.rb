@@ -1,7 +1,9 @@
 class ShoppingListsController < ApplicationController
   def shopping_list
     @inventory_obj = Inventory.find(params[:selected_inventory_id])
-    @recipe_obj = Recipe.find(params[:selected_recipe_id])
+    @recipe_obj = Recipe.find(params[:recipe_id])
+
+
 
     food_names_from_inventory = @inventory_obj.inventory_foods.map do |inventory_food|
       inventory_food.food.name.downcase
@@ -10,12 +12,12 @@ class ShoppingListsController < ApplicationController
     @missing_foods = find_missing_foods(food_names_from_inventory)
 
     @total_price = calculate_total_price(@missing_foods)
-  
 
-  shopping_list_url = shopping_list_path(recipe_id: @recipe_obj, inventory_id: @inventory_obj)
+    # shopping_list_url = shopping_list_path(recipe_id: @recipe_obj.id, inventory_id: @inventory_obj.id)
 
     # Redirect to the shopping list page
-    redirect_to shopping_list_url
+    # redirect_to shopping_list_url
+  
   end
 
   private
