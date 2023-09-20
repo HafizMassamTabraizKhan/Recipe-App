@@ -1,0 +1,52 @@
+<h1 class="recipe-page-title"><%=@recipe.name%></h1>
+<div class="recipe-wrapper">
+<div class="details-wrapper">
+  <div class="details">
+    <p>Preparation time: <%=@recipe.preparation_time%></p>
+    <p>Cooking time: <%=@recipe.cooking_time%></p>
+    <p>Steps go here</p>
+  </div>
+  <% if @recipe.user == current_user %>
+    <p><%= @recipe.public ? 'Pulic' : 'Private' %></p>
+    <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
+  <div class="toggle">
+    <%= f.check_box :public, id: 'public-checkbox' %>
+  </div>
+<% end %>
+<%end%>
+</div>
+<% if @recipe.user == current_user %>
+<div class="actions">
+  <button>Generate Shopping List</button>
+
+  <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe) %>
+
+
+</div>
+
+<h2>Food Items -- Ingredients</h2>
+  <table>
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Quantity</th>
+      <th>Value</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipe.recipe_foods.each do |recipe_food| %>
+      <tr>
+        <td><%= recipe_food.food.name %></td>
+        <td><%= recipe_food.quantity %></td>
+        <td>$ <%= recipe_food.food.price %></td>
+        <td>
+        <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food) %>
+        <%= link_to 'Remove', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%end%>
+</div>
