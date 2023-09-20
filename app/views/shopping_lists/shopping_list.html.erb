@@ -1,0 +1,35 @@
+<div class="container">
+  <h1 class="title">Shopping List</h1>
+  <div class="d-flex justify-content-between mt-4 mb-4">
+    <div class="info">
+      <h5><strong>Amount of food to buy:</strong> <%= @missing_foods.count %></h5>
+      <h5><strong>Recipe:</strong><%= link_to @recipe_obj.name, recipe_path(@recipe_obj) %></h5>
+    </div>
+    <div class="info">
+      <h5><strong>Total value of food needed:</strong> $<%= @total_price %></h5>
+      <h5><strong>Inventory:</strong><%= link_to @inventory_obj.name, inventory_path(@inventory_obj) %></h5>
+    </div>
+  </div>
+  <article>
+    <table class="table mb-4 table-striped table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">Serial#</th>
+        <th scope="col">Food</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @missing_foods.each_with_index do |missing_food, i| %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= missing_food[:food].name %></td>
+          <td><%= missing_food[:quantity_needed] %></td>
+          <td>$<%= missing_food[:food].price * missing_food[:quantity_needed] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </article>
+</div>
