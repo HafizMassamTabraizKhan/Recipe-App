@@ -1,0 +1,59 @@
+.recipe-wrapper {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 1rem;
+
+  .details-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .toggle {
+    margin-top: 1rem;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .actions button {
+    width: 40%;
+  }
+
+  #public-checkbox {
+    -webkit-appearance: none;
+    position: relative;
+    width: 50px;
+    height: 30px;
+    border-radius: 25px;
+    background-color: #ccc;
+    transition: background 0.3s;
+    outline: none;
+    cursor: pointer;
+  }
+
+  #public-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    height: 1.25rem;
+    width: 1.25rem;
+    background-color: #fff;
+    transition: left 0.3s;
+  }
+
+  #public-checkbox:checked {
+    background-color: rgb(141, 221, 141);
+  }
+
+  #public-checkbox:checked::after {
+    left: 70%;
+  }
+}

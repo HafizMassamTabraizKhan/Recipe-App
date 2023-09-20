@@ -1,0 +1,27 @@
+<!-- app/views/recipe_foods/new.html.erb -->
+<h2>Add Food to <%= @recipe.name %></h2>
+
+<%= form_for [@recipe, @recipe_food] do |f| %>
+  <!-- Form fields for RecipeFood go here -->
+  <div class="field">
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity %>
+  </div>
+
+  <!-- Form fields for Food go here -->
+  <div class="field">
+    <%= f.fields_for :food do |food_fields| %>
+      <%= food_fields.label :name %>
+      <%= food_fields.text_field :name %>
+      <%= food_fields.label :measurement_unit %>
+      <%= food_fields.text_field :measurement_unit %>
+      <%= food_fields.label :price %>
+      <%= food_fields.text_field :price %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Create Food' %>
+  </div>
+<% end %>
+
