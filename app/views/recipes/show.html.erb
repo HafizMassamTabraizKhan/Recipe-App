@@ -16,8 +16,37 @@
 <%end%>
 </div>
 <% if @recipe.user == current_user %>
-<div class="actions">
-  <button>Generate Shopping List</button>
+  <div class="actions">
+
+   <!-- Button trigger modal -->
+<button id="myBtn">
+  Generate Shoppping List</button>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Generate Shopping List</h2>
+
+    <%= form_tag(shopping_list_path(recipe_id: @recipe.id, inventory_id: :selected_inventory_id), method: :get) do %>
+  <div class="form-group">
+    <%= label_tag 'Select Inventory' %>
+    <%= select_tag 'selected_inventory_id', options_from_collection_for_select(current_user.inventories, 'id', 'name') %>
+    <%= hidden_field_tag 'selected_recipe_id', @recipe.id %>
+  </div>
+  <div class="form-group">
+    <%= submit_tag 'Generate' %>
+  </div>
+<% end %>
+
+  </div>
+
+</div>
+
+
 
   <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe) %>
 
