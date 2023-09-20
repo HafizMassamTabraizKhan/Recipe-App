@@ -3,8 +3,6 @@ class ShoppingListsController < ApplicationController
     @inventory_obj = Inventory.find(params[:selected_inventory_id])
     @recipe_obj = Recipe.find(params[:recipe_id])
 
-
-
     food_names_from_inventory = @inventory_obj.inventory_foods.map do |inventory_food|
       inventory_food.food.name.downcase
     end
