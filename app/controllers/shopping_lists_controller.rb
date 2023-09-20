@@ -12,12 +12,6 @@ class ShoppingListsController < ApplicationController
     @missing_foods = find_missing_foods(food_names_from_inventory)
 
     @total_price = calculate_total_price(@missing_foods)
-
-    # shopping_list_url = shopping_list_path(recipe_id: @recipe_obj.id, inventory_id: @inventory_obj.id)
-
-    # Redirect to the shopping list page
-    # redirect_to shopping_list_url
-  
   end
 
   private
