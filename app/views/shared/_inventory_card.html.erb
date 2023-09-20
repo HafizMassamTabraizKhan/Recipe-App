@@ -1,0 +1,13 @@
+<a href="<%= inventory_path(inventory.id) %>" id="<%= inventory.id %>"  class="text-decoration-none">
+<div class="row border border-2 mb-4">
+      <div class="col-4 py-3 ps-4 text-start">
+              <% if inventory.user == current_user %>
+                <%= link_to inventory.name, inventory_path(inventory), class: 'nav-link mb-3 fs-4 link-dark'%>
+                <%= button_to 'Remove', inventory_path(inventory), class: "btn btn-danger fs-5 p-1 custom-button-width", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>                <%end%>
+      </div>
+          <div class="col p-2 text-start">
+                <p><%= inventory.description %></p>
+        </div>
+</div>
+
+</a>
