@@ -6,11 +6,18 @@
     <p>Cooking time: <%=@recipe.cooking_time%></p>
     <p>Steps go here</p>
   </div>
-  <div class="toggle">button</p></div>
+  <% if @recipe.user == current_user %>
+    <p><%= @recipe.public ? 'Pulic' : 'Private' %></p>
+    <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
+  <div class="toggle">
+    <%= f.check_box :public, id: 'public-checkbox' %>
+  </div>
+<% end %>
+<%end%>
 </div>
 <% if @recipe.user == current_user %>
 <div class="actions">
-  <button>Generate Shopping LIst</button>
+  <button>Generate Shopping List</button>
 
   <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe) %>
 

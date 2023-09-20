@@ -18,7 +18,15 @@ class RecipesController < ApplicationController
   def edit
   end
 
-  def update
+   def update
+    @recipe = Recipe.find(params[:id])
+    if @recipe.update(recipe_params)
+      # Handle successful update
+      redirect_to @recipe, notice: 'Recipe updated successfully'
+    else
+      # Handle validation errors
+      render :edit
+    end
   end
 
   def destroy
@@ -30,5 +38,11 @@ class RecipesController < ApplicationController
       flash[:alert] = "Error deleting the recipe."
     end
     redirect_to recipes_path
+  end
+
+   private
+
+  def recipe_params
+    params.require(:recipe).permit(:public)
   end
 end
