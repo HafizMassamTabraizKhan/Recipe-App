@@ -1,0 +1,49 @@
+<div class="container-fluid">
+
+    <div class="container mt-5"> 
+
+        <h2 class="text-center"><%= @inventory.name %></h2>
+        <div class="row">
+            <div class="col-10 offset-1">
+
+                <div class="text-align-left">
+                <%= link_to 'Add Food', new_inventory_inventory_food_path(@inventory), id: 'add-food-link', class: 'bg-dark bg-gradient text-info float-end mb-3 p-2 text-decoration-none' %>                </div>
+
+                <div class="table">
+                <% if @inventory.inventory_foods.any? %>
+                <table class="table table-striped table-bordered mt-2">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Food</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @inventory.inventory_foods.each_with_index do |food_inventory, index| %>
+                      <tr>
+                        <td><%= index + 1 %></td>                   
+                        <td><%=food_inventory.food.name %></td>
+                        <td>
+                          <%= food_inventory.quantity.to_i %>
+                          <%= food_inventory.food.measurement_unit %> grams
+                        </td>
+        
+                        <td class="d-flex justify-content-center justify-content-around">
+                          <% if can? :manage, @inventory %>
+                            <%= button_to "Remove", inventory_inventory_food_path(@inventory, food_inventory), class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
+                          <% else %>
+                            NA
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
