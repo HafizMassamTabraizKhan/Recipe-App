@@ -9,11 +9,11 @@ class RecipesController < ApplicationController
   end
 
   def new
-    @recipe = Recipe.new
+    @recipe = current_user.recipes.build
   end
 
   def create
-  @recipe = Recipe.new(new_recipe_params)
+  @recipe = current_user.recipes.build(new_recipe_params)
 
   if @recipe.save
     redirect_to @recipe, notice: 'Recipe was successfully created.'
@@ -27,10 +27,8 @@ end
   def update
     @recipe = Recipe.find(params[:id])
     if @recipe.update(recipe_params)
-      # Handle successful update
       redirect_to @recipe, notice: 'Recipe updated successfully'
     else
-      # Handle validation errors
       render :edit
     end
   end
