@@ -12,6 +12,5 @@ Rails.application.routes.draw do
   resources :recipe_foods
  end
 
-  root 'recipes#index'
-
+  root 'public_recipes#index'
 end
