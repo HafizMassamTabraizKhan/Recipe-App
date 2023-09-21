@@ -22,4 +22,3 @@ class Ability
     can :manage, InventoryFood, inventory: { user_id: user.id }
   end
 end
-
