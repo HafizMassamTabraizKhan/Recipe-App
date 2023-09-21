@@ -10,7 +10,7 @@
       <p class="mr-4 m-2"><%= @recipe.public ? 'Pulic' : 'Private' %></p>
       <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
         <div class="toggle form-check form-switch m-2">
-          <%= f.check_box :public, id: 'public-checkbox', class: 'form-check-input' %>
+          <%= f.check_box :public, { id: 'public-checkbox', class: 'form-check-input', onchange: 'this.form.submit();' } %>
         </div>
       <% end %>
     <%end%>
@@ -51,7 +51,6 @@
   <% end %>
   </tbody>
 </table>
-
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
