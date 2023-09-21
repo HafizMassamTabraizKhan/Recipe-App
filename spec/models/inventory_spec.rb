@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Inventory, type: :model do
   let(:user) { User.create(name: 'Test User', email: 'test@example.com', password: 'password') }
-  let(:inventory) { Inventory.new(name: 'Inventory 1', description: 'This is inventory 1', user:) }
+  let(:inventory) { Inventory.create(name: 'Inventory 1', description: 'This is inventory 1', user:) }
 
   it 'should create a valid inventory' do
     expect(inventory.valid?).to eq true
