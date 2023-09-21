@@ -5,35 +5,51 @@ class RecipeFoodsController < ApplicationController
 
   def new
     @recipe = Recipe.find(params[:recipe_id])
-    @recipe_food = @recipe.recipe_foods.build
-    @food = @recipe_food.build_food
+    @foods = Food.all
+    @recipe_food = RecipeFood.new
   end
 
   def create
     @recipe = Recipe.find(params[:recipe_id])
-    @recipe_food = @recipe.recipe_foods.build(recipe_food_params)
-    @food = @recipe_food.build_food(food_params)
-
-    if @food.save && @recipe_food.save
-      redirect_to recipe_path(@recipe), notice: 'Ingredient and quantity were successfully added.'
+    @recipe_food = RecipeFood.new(recipe_food_params)
+    if @recipe_food.save
+      redirect_to recipe_path(@recipe), notice: 'Ingredient successfully added.'
     else
+      puts @recipe_food.errors.full_messages
       render 'new'
     end
   end
 
-  def edit; end
+  def edit
+    @recipe_food = RecipeFood.find(params[:id])
+    @recipe = @recipe_food.recipe
+    @foods = Food.all
+  end
 
-  def update; end
+  def update
+    @recipe_food = RecipeFood.find(params[:id])
+    @recipe = @recipe_food.recipe
 
-  def destroy; end
+    if @recipe_food.update(recipe_food_params)
+      redirect_to recipe_path(@recipe), notice: 'Ingredient successfully updated.'
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @recipe_food = RecipeFood.find(params[:id])
+    @recipe = @recipe_food.recipe
+    if @recipe_food.destroy
+      redirect_to recipe_path(@recipe), notice: 'Ingredient successfully removed.'
+    else
+      redirect_to recipe_path(@recipe), alert: 'Failed to remove ingredient.'
+    end
+  end
 
   private
 
   def recipe_food_params
-    params.require(:recipe_food).permit(:quantity, food_attributes: %i[name measurement_unit price])
-  end
-
-  def food_params
-    params.require(:recipe_food).require(:food).permit(:name, :measurement_unit, :price)
+    params.require(:recipe_food).permit(:quantity, :recipe_id, :food_id)
   end
 end

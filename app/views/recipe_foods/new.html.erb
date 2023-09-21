@@ -1,27 +1,22 @@
-<!-- app/views/recipe_foods/new.html.erb -->
-<h2>Add Food to <%= @recipe.name %></h2>
 
-<%= form_for [@recipe, @recipe_food] do |f| %>
-  <!-- Form fields for RecipeFood go here -->
+
+<h1>Add Ingredient to Recipe</h1>
+
+<%= form_with(model: [@recipe, @recipe_food], url: recipe_recipe_foods_path(@recipe),  local: true, remote: true) do |form| %>
   <div class="field">
-    <%= f.label :quantity %>
-    <%= f.number_field :quantity %>
+  <%= form.hidden_field :recipe_id, value: @recipe.id %>
+    <%= form.label :food_id, 'Select Food' %>
+    <%= form.collection_select :food_id, @foods, :id, :name, { prompt: '.. Select a Food ..' }, id: 'food-select'%>
   </div>
 
-  <!-- Form fields for Food go here -->
   <div class="field">
-    <%= f.fields_for :food do |food_fields| %>
-      <%= food_fields.label :name %>
-      <%= food_fields.text_field :name %>
-      <%= food_fields.label :measurement_unit %>
-      <%= food_fields.text_field :measurement_unit %>
-      <%= food_fields.label :price %>
-      <%= food_fields.text_field :price %>
-    <% end %>
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
   </div>
 
   <div class="actions">
-    <%= f.submit 'Create Food' %>
+    <%= form.submit 'Add Ingredient' %>
   </div>
 <% end %>
 
+<%= link_to 'Back to Recipe', recipe_path(@recipe) %>

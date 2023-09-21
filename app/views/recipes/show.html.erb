@@ -70,10 +70,10 @@
       <tr>
         <td><%= recipe_food.food.name %></td>
         <td><%= recipe_food.quantity %></td>
-        <td>$ <%= recipe_food.food.price %></td>
+        <td>$ <%= (recipe_food.food.price * recipe_food.quantity ) %></td>
         <td>
         <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food) %>
-        <%= link_to 'Remove', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Remove', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
       </td>
       </tr>
     <% end %>

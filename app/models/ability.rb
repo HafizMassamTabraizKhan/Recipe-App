@@ -2,17 +2,23 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new # Guest user (unauthenticated)
+    user ||= User.new
 
-    # return unless user.present?
+    can :read, Recipe
+
+    if user.persisted?
+      can :manage, Recipe, user_id: user.id
+      can :create, Recipe
+      can :update, Recipe do |recipe|
+        recipe.user_id == user.id
+      end
+      can :destroy, Recipe do |recipe|
+        recipe.user_id == user.id
+      end
+    end
 
     can :manage, Inventory, user_id: user.id
     can :manage, Food, user_id: user.id
     can :manage, InventoryFood, inventory: { user_id: user.id }
-
-    # Define abilities based on user roles
-    return unless user.persisted? # Check if the user is authenticated
-
-    can :manage, Recipe, user_id: user.id
   end
 end
