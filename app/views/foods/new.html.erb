@@ -1,3 +1,5 @@
+<h1>Add a food</h1>
+
 <%= form_with(model: @food, url: foods_path, method: :post) do |form| %>
   <% if @food.errors.any? %>
     <div id="error_explanation">
