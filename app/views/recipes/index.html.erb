@@ -6,9 +6,7 @@
     <div class="card-body text-secondary d-flex justify-content-between align-items-center">
       <div style="width: 40%;">
       <h5 class="card-title"><a href="<%= recipe_path(recipe) %>" class="text-decoration-none text-uppercase font-weight-bold"><%= recipe.name %></a></h5>
-      <% if can? :manage, recipe %>
-        <%= button_to "REMOVE", recipe_path(recipe), method: :delete, data: { turbo_confirm: "Are you sure? "}, class: "text-decoration-none btn btn-danger" %>
-      <% end %>
+      <%= button_to "REMOVE", recipe_path(recipe), method: :delete, data: { turbo_confirm: "Are you sure? "}, class: "text-decoration-none btn btn-danger" %>
     </div>
     <p class=""><%= recipe.description %></p>
   </div>
