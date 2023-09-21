@@ -17,5 +17,4 @@ class Food < ApplicationRecord
 
     errors.add(:name, 'has already been taken (case-insensitive)')
   end
-
 end
