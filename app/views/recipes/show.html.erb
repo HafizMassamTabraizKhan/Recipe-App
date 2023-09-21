@@ -1,3 +1,4 @@
+
 <h1 class="recipe-page-title"><%=@recipe.name%></h1>
 <div class="recipe-wrapper">
 <div class="details-wrapper">
@@ -10,7 +11,7 @@
     <p><%= @recipe.public ? 'Pulic' : 'Private' %></p>
     <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
   <div class="toggle">
-    <%= f.check_box :public, id: 'public-checkbox' %>
+    <%= f.check_box :public, { id: 'public-checkbox', onchange: 'this.form.submit();' } %>
   </div>
 <% end %>
 <%end%>
@@ -81,3 +82,4 @@
 </table>
 <%end%>
 </div>
+
