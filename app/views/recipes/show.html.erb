@@ -16,7 +16,7 @@
     <%end%>
   </div>
 </div>
-
+<% if @recipe.user == current_user %>
 <div class="d-flex justify-content-between mt-5">
   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Generate shopping list
@@ -72,3 +72,4 @@
       </div>
   </div>
 </div>
+<% end %>
