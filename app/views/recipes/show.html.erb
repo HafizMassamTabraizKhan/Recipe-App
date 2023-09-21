@@ -21,11 +21,9 @@
   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Generate shopping list
   </button>
-  <% if can? :manage, @recipe %>
-    <button type="button" class="btn btn-primary">
-      <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe), class: "text-white text-decoration-none" %>
-    </button>
-  <% end %>
+  <button type="button" class="btn btn-primary">
+    <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe), class: "text-white text-decoration-none" %>
+  </button>
 </div>
 
 <hr>
@@ -45,10 +43,33 @@
       <td><%= recipe_food.food.name %></td>
       <td><%= recipe_food.quantity %> <%= recipe_food.food.measurement_unit %></td>
       <td>$ <%= recipe_food.food.price %></td>
-      <% if can? :destroy, recipe_food %>
-      <td><%= link_to "Delete", recipe_food, class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %></td>
-      <% end %>
+      <td>
+        <%= link_to "Modify", edit_recipe_recipe_food_path(@recipe, recipe_food), class: "btn btn-info text-white" %>
+        <%= link_to "Delete", recipe_recipe_food_path(@recipe, recipe_food), class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
+      </td>
     </tr>
   <% end %>
   </tbody>
 </table>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="exampleModalLabel">Generate Shopping List</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: shopping_list_path(recipe_id: @recipe.id, inventory_id: :selected_inventory_id), method: :get) do |form| %>
+          <div class="form-group">
+            <%= form.collection_select :selected_inventory_id, current_user.inventories, :id, :name, { prompt: '.. Select an Inventory ..' }, { id: 'inventory-select', class: 'form-control' } %>
+          </div>
+          <div class="form-group mt-3">
+            <%= form.submit "Generate", class: "btn btn-primary" %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        <% end %>
+      </div>
+  </div>
+</div>
