@@ -32,11 +32,13 @@ RSpec.feature 'Shopping List Page', type: :feature do
     expect(page).to have_content('Shopping List')
     expect(page).to have_content("Amount of food to buy: #{missing_foods.count}")
     expect(page).to have_link('Sample Recipe', href: recipe_path(recipe))
-    expect(page).to have_content("Total value of food needed: $#{missing_foods.map do |missing_food|
-                                                                   missing_food[:food].price * missing_food[:quantity_needed]
-                                                                 end.sum.to_f}")
-    expect(page).to have_link('Sample Inventory', href: inventory_path(inventory))
+    # Calculate the total value of food needed
+    total_value = missing_foods.map do |missing_food|
+      missing_food[:food].price * missing_food[:quantity_needed]
+    end.sum.to_f
+    expect(page).to have_content("Total value of food needed: $#{total_value}")
 
+    expect(page).to have_link('Sample Inventory', href: inventory_path(inventory))
     within('table') do
       expect(page).to have_content('Bread')
       expect(page).to have_content('1')
