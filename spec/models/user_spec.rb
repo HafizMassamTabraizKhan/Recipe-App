@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create(name: 'Massam', email: 'm@example.com', password: 'password') }
   it 'should valid with valid attributes' do
+    user = User.create(name: 'Massam', email: 'm@example.com', password: 'password')
     expect(user.valid?).to eq true
   end
   it 'should not create a user without a name' do
