@@ -1,4 +1,4 @@
-<h1 class="text-center py-4">Add a food</h1>
+<h1 class="text-center py-4">Add New Food</h1>
 
 <%= form_with(model: @food, url: foods_path, method: :post) do |form| %>
   <% if @food.errors.any? %>
@@ -29,6 +29,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "Submit",class: "btn btn-primary mt-3 mb-3" %>
+    <%= form.submit "Submit", class: "btn btn-primary mt-3 mb-3" %>
   </div>
 <% end %>
