@@ -7,7 +7,7 @@
             <div class="col-10 offset-1">
 
                 <div class="text-align-left">
-                <%= link_to 'Add Food', new_inventory_inventory_food_path(@inventory), id: 'add-food-link', class: 'bg-dark bg-gradient text-info float-end mb-3 p-2 text-decoration-none' %>                </div>
+                <%= link_to 'Add Food', new_inventory_inventory_food_path(@inventory), id: 'add-food-link', class: 'btn btn-primary float-end mb-3 p-2 text-decoration-none' %>                </div>
 
                 <div class="table">
                 <% if @inventory.inventory_foods.any? %>
