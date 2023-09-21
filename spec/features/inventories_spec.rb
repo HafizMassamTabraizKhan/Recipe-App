@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature 'Inventory Index', type: :feature do
-
   let(:inventory) { create(:inventory) }
 
   before do
-    create(:inventory_food, inventory: inventory, food: create(:food))
+    create(:inventory_food, inventory:, food: create(:food))
     visit inventory_path(inventory)
   end
 

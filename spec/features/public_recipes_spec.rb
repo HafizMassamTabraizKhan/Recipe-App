@@ -6,8 +6,8 @@ RSpec.feature 'Public Recipes List', type: :feature do
   scenario 'User views the list of public recipes' do
     # Create some sample data for public recipes
     user = FactoryBot.create(:user, name: 'John Doe')
-    public_recipe1 = FactoryBot.create(:recipe, name: 'Recipe 1', user: user)
-    public_recipe2 = FactoryBot.create(:recipe, name: 'Recipe 2', user: user)
+    public_recipe1 = FactoryBot.create(:recipe, name: 'Recipe 1', user:)
+    public_recipe2 = FactoryBot.create(:recipe, name: 'Recipe 2', user:)
 
     # Visit the public recipes page
     visit root_path
@@ -29,7 +29,5 @@ RSpec.feature 'Public Recipes List', type: :feature do
       expect(page).to have_content('Total food items: 0') # Customize as needed
       expect(page).to have_content('Total price: $0') # Adjusted expectation
     end
-
-  
   end
 end

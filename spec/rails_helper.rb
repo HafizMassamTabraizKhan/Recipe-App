@@ -32,7 +32,9 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{Rails.root}/spec/fixtures"
-
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Warden::Test::Helpers
+  config.include FactoryBot::Syntax::Methods
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -69,21 +71,9 @@ RSpec.configure do |config|
 
   # spec/rails_helper.rb or spec/spec_helper.rb
 
-# Add the following lines at the beginning of the file
-require 'factory_bot_rails'
+  # Add the following lines at the beginning of the file
+  require 'factory_bot_rails'
 
-RSpec.configure do |config|
-  # Other RSpec configuration...
-  
-  # Include FactoryBot methods for use in your tests
-  config.include FactoryBot::Syntax::Methods
-end
-
-# In your rails_helper.rb
-
-RSpec.configure do |config|
-  config.include Devise::Test::IntegrationHelpers, type: :feature
-  config.include Warden::Test::Helpers
-end
-
+  # RSpec
+  # In your rails_helper.rb
 end

@@ -51,7 +51,6 @@ class InventoriesController < ApplicationController
     params.require(:inventory).permit(:name, :description)
   end
 
-  
   def can_manage_inventory?(inventory)
     inventory.user == current_user
   end

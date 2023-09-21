@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.feature 'Shopping List Page', type: :feature do
   let(:user) { FactoryBot.create(:user) }
-  let(:inventory) { FactoryBot.create(:inventory, user: user, name: 'Sample Inventory') }
-  let(:recipe) { FactoryBot.create(:recipe, user: user, name: 'Sample Recipe') }
+  let(:inventory) { FactoryBot.create(:inventory, user:, name: 'Sample Inventory') }
+  let(:recipe) { FactoryBot.create(:recipe, user:, name: 'Sample Recipe') }
   let(:missing_foods) { [] }
 
   before do
@@ -21,9 +21,7 @@ RSpec.feature 'Shopping List Page', type: :feature do
     # Calculate the missing foods
     recipe.recipe_foods.each do |recipe_food|
       missing_quantity = recipe_food.quantity - inventory.inventory_foods.where(food: recipe_food.food).sum(:quantity)
-      if missing_quantity.positive?
-        missing_foods << { food: recipe_food.food, quantity_needed: missing_quantity }
-      end
+      missing_foods << { food: recipe_food.food, quantity_needed: missing_quantity } if missing_quantity.positive?
     end
 
     visit shopping_list_path(recipe_id: recipe.id, inventory_id: inventory.id, selected_inventory_id: inventory.id)
@@ -34,7 +32,9 @@ RSpec.feature 'Shopping List Page', type: :feature do
     expect(page).to have_content('Shopping List')
     expect(page).to have_content("Amount of food to buy: #{missing_foods.count}")
     expect(page).to have_link('Sample Recipe', href: recipe_path(recipe))
-    expect(page).to have_content("Total value of food needed: $#{(missing_foods.map { |missing_food| missing_food[:food].price * missing_food[:quantity_needed] }.sum).to_f}")
+    expect(page).to have_content("Total value of food needed: $#{missing_foods.map do |missing_food|
+                                                                   missing_food[:food].price * missing_food[:quantity_needed]
+                                                                 end.sum.to_f}")
     expect(page).to have_link('Sample Inventory', href: inventory_path(inventory))
 
     within('table') do
