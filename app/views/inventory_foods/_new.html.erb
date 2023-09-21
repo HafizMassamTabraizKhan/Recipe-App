@@ -1,11 +1,11 @@
 <%= form_with(model: @inventory_food, url: inventory_inventory_foods_path(@inventory), local: true, remote: true, id: 'inventory-food-form') do |form| %>
     <div class = "mt-4 p-2">
       <%= form.hidden_field :inventory_id, value: @inventory.id %>
-      <%= form.collection_select :food_id, @foods, :id, :name, { prompt: '.. Select a Food ..' }, id: 'food-select'%>
+      <%= form.collection_select :food_id, @foods, :id, :name, { prompt: '.. Select a Food ..' }, { id: 'food-select', class: 'form-control' } %>
       <% if @inventory_food.errors.any? %>
-          <p class="text-danger mb-0">
-            <%= @inventory_food.errors[:food_id].first %>
-          </p>
+        <div class="alert alert-danger" role="alert">
+          <%= @inventory_food.errors[:food_id].first %>
+        </div>
       <% end %>
     </div>
   
@@ -17,9 +17,9 @@
           class: 'form-control'
       %>
       <% if @inventory_food.errors.any? %>
-          <p class="text-danger mb-0">
-            <%= @inventory_food.errors[:quantity].first %>
-          </p>
+        <div class="alert alert-danger" role="alert">
+          <%= @inventory_food.errors[:quantity].first %>
+        </div>
       <% end %>
     </div>
   
