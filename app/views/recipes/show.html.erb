@@ -1,83 +1,54 @@
-<h1 class="recipe-page-title"><%=@recipe.name%></h1>
-<div class="recipe-wrapper">
-<div class="details-wrapper">
-  <div class="details">
-    <p>Preparation time: <%=@recipe.preparation_time%></p>
-    <p>Cooking time: <%=@recipe.cooking_time%></p>
-    <p>Steps go here</p>
+<h1 class="text-center py-4"><%= @recipe.name.upcase %></h1>
+<div class="d-flex justify-content-between">
+  <div>
+    <p class="lead">Preparation time: <span><%= @recipe.preparation_time %></span></p>
+    <p class="lead">Cooking time :<span><%= @recipe.cooking_time %></span></p>
+    <p class="lead"><%= @recipe.description %></p>
   </div>
-  <% if @recipe.user == current_user %>
-    <p><%= @recipe.public ? 'Pulic' : 'Private' %></p>
-    <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
-  <div class="toggle">
-    <%= f.check_box :public, id: 'public-checkbox' %>
+  <div class="d-flex">
+    <% if @recipe.user == current_user %>
+      <p class="mr-4 m-2"><%= @recipe.public ? 'Pulic' : 'Private' %></p>
+      <%= form_for @recipe, url: recipe_path(@recipe), method: :patch, html: {id: 'recipe-form' } do |f| %>
+        <div class="toggle form-check form-switch m-2">
+          <%= f.check_box :public, id: 'public-checkbox', class: 'form-check-input' %>
+        </div>
+      <% end %>
+    <%end%>
   </div>
-<% end %>
-<%end%>
-</div>
-<% if @recipe.user == current_user %>
-  <div class="actions">
-
-   <!-- Button trigger modal -->
-<button id="myBtn">
-  Generate Shoppping List</button>
-
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Generate Shopping List</h2>
-
-    <%= form_with(url: shopping_list_path(recipe_id: @recipe.id, inventory_id: :selected_inventory_id), method: :get) do |form| %>
-      <div class="form-group">
-        <%= form.collection_select :selected_inventory_id, current_user.inventories, :id, :name, { prompt: '.. Select an Inventory ..' }, { id: 'inventory-select' } %>
-      </div>
-      <div class="form-group">
-        <%= form.submit 'Generate' %>
-      </div>
-    <% end %>
-    
-    
-    
-    
-    
-  </div>
-
 </div>
 
-
-
-  <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe) %>
-
-
+<div class="d-flex justify-content-between mt-5">
+  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Generate shopping list
+  </button>
+  <% if can? :manage, @recipe %>
+    <button type="button" class="btn btn-primary">
+      <%= link_to 'Add ingredient', new_recipe_recipe_food_path(@recipe), class: "text-white text-decoration-none" %>
+    </button>
+  <% end %>
 </div>
 
-<h2>Food Items -- Ingredients</h2>
-  <table>
+<hr>
+
+<table class="table table-striped">
   <thead>
-    <tr>
-      <th>Food</th>
-      <th>Quantity</th>
-      <th>Value</th>
-      <th>Actions</th>
-    </tr>
+  <tr>
+    <th>Food</th>
+    <th>Quantity</th>
+    <th>Value per Unit</th>
+    <th>Actions</th>
+  </tr>
   </thead>
   <tbody>
-    <% @recipe.recipe_foods.each do |recipe_food| %>
-      <tr>
-        <td><%= recipe_food.food.name %></td>
-        <td><%= recipe_food.quantity %></td>
-        <td>$ <%= (recipe_food.food.price * recipe_food.quantity ) %></td>
-        <td>
-        <%= link_to 'Modify', edit_recipe_recipe_food_path(@recipe, recipe_food) %>
-        <%= link_to 'Remove', recipe_recipe_food_path(@recipe, recipe_food), method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %>
-      </td>
-      </tr>
-    <% end %>
+  <% @recipe.recipe_foods.each do |recipe_food| %>
+    <tr>
+      <td><%= recipe_food.food.name %></td>
+      <td><%= recipe_food.quantity %> <%= recipe_food.food.measurement_unit %></td>
+      <td>$ <%= recipe_food.food.price %></td>
+      <% if can? :destroy, recipe_food %>
+      <td><%= link_to "Delete", recipe_food, class: "btn btn-danger", method: :delete, data: { "turbo-method": :delete, turbo_confirm: "Are you sure?" } %></td>
+      <% end %>
+    </tr>
+  <% end %>
   </tbody>
 </table>
-<%end%>
-</div>
