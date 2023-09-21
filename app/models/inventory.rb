@@ -3,5 +3,5 @@ class Inventory < ApplicationRecord
   has_many :inventory_foods, class_name: 'InventoryFood', dependent: :destroy
   has_many :foods, through: :inventory_foods
 
-  validates :user_id, :name, presence: true
+  validates :user_id, :name, :description, presence: true
 end

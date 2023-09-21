@@ -24,7 +24,7 @@ RSpec.describe Recipe, type: :model do
     recipe.cooking_time = nil
     expect(recipe).not_to be_valid
   end
-  it 'should have a valid description time' do
+  it 'should have a valid description' do
     recipe.description = nil
     expect(recipe).not_to be_valid
   end
