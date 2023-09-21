@@ -1,52 +1,48 @@
-# spec/features/recipe_show_spec.rb
-
 require 'rails_helper'
 
-RSpec.feature 'Recipe Show Page', type: :feature do
+RSpec.feature 'Shopping List Page', type: :feature do
   let(:user) { FactoryBot.create(:user) }
-  let(:recipe) { FactoryBot.create(:recipe, user: user, name: 'Sample Recipe', public: true) }
+  let(:inventory) { FactoryBot.create(:inventory, user: user, name: 'Sample Inventory') }
+  let(:recipe) { FactoryBot.create(:recipe, user: user, name: 'Sample Recipe') }
+  let(:missing_foods) { [] }
 
   before do
-    login_as(user, scope: :user) # Use Warden's login_as method to log in the user
+    login_as(user)
+
+    # Create two missing foods
+    bread = FactoryBot.create(:food, name: 'Bread', price: 2.5)
+    milk = FactoryBot.create(:food, name: 'Milk', price: 3.5)
+
+    recipe.recipe_foods.create(food: bread, quantity: 1)
+    recipe.recipe_foods.create(food: milk, quantity: 2)
+
+    # Calculate the missing foods
+    recipe.recipe_foods.each do |recipe_food|
+      missing_quantity = recipe_food.quantity - inventory.inventory_foods.where(food: recipe_food.food).sum(:quantity)
+      if missing_quantity.positive?
+        missing_foods << { food: recipe_food.food, quantity_needed: missing_quantity }
+      end
+    end
+
+    visit shopping_list_path(recipe_id: recipe.id, inventory_id: inventory.id, selected_inventory_id: inventory.id)
   end
 
-  scenario 'User views the recipe details' do
-    visit recipe_path(recipe)
-
+  scenario 'User views the shopping list details' do
     # Assertions to check the content of the page
-    expect(page).to have_selector('h1.recipe-page-title', text: 'Sample Recipe')
-    expect(page).to have_content("Preparation time: #{recipe.preparation_time}")
-    expect(page).to have_content("Cooking time: #{recipe.cooking_time}")
-    expect(page).to have_content('Steps go here')
-
-    within('.details-wrapper') do
-      expect(page).to have_content('public recipes') # Corrected spelling to 'Public'
-      expect(page).to have_selector('form#recipe-form')
-      expect(page).to have_selector('input#public-checkbox')
-    end
-
-    within('.actions') do
-      expect(page).to have_button('Generate Shopping List', id: 'myBtn')
-      expect(page).to have_selector('div#myModal')
-      expect(page).to have_selector('form[action="/shopping_list"]')
-      expect(page).to have_select('selected_inventory_id', options: ['.. Select an Inventory ..'] + user.inventories.pluck(:name))
-      expect(page).to have_button('Generate')
-      expect(page).to have_link('Add ingredient', href: new_recipe_recipe_food_path(recipe))
-    end
-
-    expect(page).to have_selector('h2', text: 'Food Items -- Ingredients')
+    expect(page).to have_content('Shopping List')
+    expect(page).to have_content("Amount of food to buy: 2")
+    expect(page).to have_link('Sample Recipe', href: recipe_path(recipe))
+    expect(page).to have_content("Total value of food needed: $9.5")
+    expect(page).to have_link('Sample Inventory', href: inventory_path(inventory))
 
     within('table') do
-      expect(page).to have_selector('thead')
-      expect(page).to have_selector('tbody')
+      expect(page).to have_content('Bread')
+      expect(page).to have_content('1')
+      expect(page).to have_content('$2.5')
 
-      recipe.recipe_foods.each do |recipe_food|
-        expect(page).to have_content(recipe_food.food.name)
-        expect(page).to have_content(recipe_food.quantity)
-        expect(page).to have_content("$ #{(recipe_food.food.price * recipe_food.quantity).to_f.round(2)}")
-        expect(page).to have_link('Modify', href: edit_recipe_recipe_food_path(recipe, recipe_food))
-        expect(page).to have_link('Remove', href: recipe_recipe_food_path(recipe, recipe_food))
-      end
+      expect(page).to have_content('Milk')
+      expect(page).to have_content('2')
+      expect(page).to have_content('$7.0')
     end
   end
 end
