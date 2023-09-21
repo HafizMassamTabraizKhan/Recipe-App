@@ -74,6 +74,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'warden'
 end
 
 gem 'rubocop', '>= 1.0', '< 2.0'
