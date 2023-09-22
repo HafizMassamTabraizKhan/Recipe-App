@@ -1,0 +1,31 @@
+<%= form_with(model: @inventory_food, url: inventory_inventory_foods_path(@inventory), local: true, remote: true, id: 'inventory-food-form') do |form| %>
+    <div class = "mt-4 p-2">
+      <%= form.hidden_field :inventory_id, value: @inventory.id %>
+      <%= form.collection_select :food_id, @foods, :id, :name, { prompt: '.. Select a Food ..' }, { id: 'food-select', class: 'form-control' } %>
+      <% if @inventory_food.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= @inventory_food.errors[:food_id].first %>
+        </div>
+      <% end %>
+    </div>
+  
+    <div class = "mt-2 p-2">
+      <%= form.number_field :quantity,
+          autofocus: true,
+          autocomplete: 'quantity',
+          placeholder: 'Enter quantity',
+          class: 'form-control'
+      %>
+      <% if @inventory_food.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= @inventory_food.errors[:quantity].first %>
+        </div>
+      <% end %>
+    </div>
+  
+    <div class="actions text-center mt-4">
+      <%= form.submit 'Add', class: 'btn btn-primary btn-sm  px-4' %>
+      <%= link_to 'Cancel', inventory_path(@inventory), class: "btn btn-dark btn-sm px-3" %>
+    </div>
+<% end %>
+  

@@ -1,0 +1,9 @@
+<div class="card border-secondary mb-2" style="width: 100%;">
+        <div class="card-body text-secondary d-flex justify-content-between align-items-center">
+                <div style="width: 30%;">
+                        <h5 class="card-title"><a href="<%= inventory_path(inventory) %>" class="text-decoration-none text-uppercase font-weight-bold"><%= inventory.name %></a></h5>
+                        <%= button_to "REMOVE", inventory_path(inventory), method: :delete, data: { turbo_confirm: "Are you sure? "}, class: "text-decoration-none btn btn-danger" %>
+                </div>
+                <p style="width: 70%;"><%= inventory.description %></p>
+        </div>
+</div>

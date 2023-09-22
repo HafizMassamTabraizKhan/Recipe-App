@@ -1,0 +1,7 @@
+<h1 class="text-center py-4">Inventories List</h1>
+
+<%= link_to "Add Inventory", new_inventory_path, class: "btn btn-primary mb-2 float-end" %>
+<% @inventories.each do |inventory| %>
+  <%= render partial: 'shared/inventory_card', locals: { inventory: inventory } %>
+<% end %>
+
