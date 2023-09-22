@@ -30,7 +30,7 @@
 
 # 📖 Recipe App<a name="about-project"></a>
 
-**Recipe App** 
+**Recipe App**
 The Recipe app keeps track of all your recipes, ingredients, and inventory. It will allow you to save ingredients, keep track of what you have, create recipes, and generate a shopping list based on what you have and what you are missing from a recipe. The app allows you to make recipes public so anyone can access them.
 
 ## 🛠 Built With <a name="built-with"></a>
@@ -68,7 +68,6 @@ The Recipe app keeps track of all your recipes, ingredients, and inventory. It w
 - **A general shopping list view**
 - **A list of all public recipes from other users**
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -89,7 +88,7 @@ In order to run this project you need:
 
 Clone this repository to your desired folder:
 
-```sh  
+```sh
    git clone git@github.com:HafizMassamTabraizKhan/Recipe-App.git
    cd Recipe-App
 ```
@@ -137,6 +136,12 @@ To run tests, run the following command:
 - Twitter: [@CEOAbel1](https://twitter.com/CEOAbel1)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/abel-morara)
 
+### 👤 **Peter Dumbari**
+
+- GitHub: [@Peter-Dumbari](https://github.com/Peter-Dumbari)
+- Twitter: [@Peterdumbari](https://twitter.com/peterdumbari)
+- LinkedIn: [@Peter-Dumbari](https://www.linkedin.com/in/peterdumbari)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
@@ -147,7 +152,7 @@ To run tests, run the following command:
 - [ ] **Inventory Shopping Lists functionality**
 - [ ] **Cooking Group meetups and formation**
 - [ ] **Publish Statuses on trending recipes**
-**
+      \*\*
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -165,7 +170,7 @@ Feel free to check the [issues page](../../issues/).
 
 ## ⭐️ Show your support <a name="support"></a>
 
-If you like this project consider leaving a star in the repo. 
+If you like this project consider leaving a star in the repo.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
